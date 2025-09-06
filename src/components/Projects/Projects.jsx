@@ -15,48 +15,44 @@ const ContentSection = styled.div`
 const ProjectsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 50px;
+  gap: 60px;
   margin-top: 20px;
   overflow: visible;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 30px;
+    justify-items: center; /* center cards */
   }
 `;
 
 const ProjectCard = styled(motion.div)`
+  position: relative;
   background: #141c2f;
   border-radius: 20px;
-  width: 30vw;
-  height: 550px;
+  width: 33vw;
+  height: 450px;
+  overflow: hidden;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  overflow: hidden;
   justify-content: space-between;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.35s ease;
-  position: relative;
-  border: 3px solid #555;
+  border: 3px solid transparent; /* border thickness */
 
-  /* ===== ADD THIS ::before BLOCK HERE ===== */
+  /* gradient border using pseudo-element */
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 20px;
-    padding: 3px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 23px; /* slightly more than card radius */
     background: linear-gradient(45deg, #ff7e5f, #feb47b, #6a11cb, #2575fc);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    z-index: 2;
     opacity: 0;
     transition: opacity 0.35s ease;
-    pointer-events: none;
   }
 
   &:hover::before {
@@ -64,135 +60,48 @@ const ProjectCard = styled(motion.div)`
   }
 
   &:hover {
-    height: 650px;
     box-shadow: 0 35px 65px rgba(0, 0, 0, 0.55);
-    border-color: transparent;
+    height: 550px;
   }
 
   .image-section {
     height: 50%;
-    background-size: contain;
+    background-size: cover; /* fill fully */
     background-position: center;
     border-radius: 20px 20px 0 0;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover .image-section {
+    transform: scale(1.05);
   }
 
   .text-section {
-    height: 50%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    padding: 15px;
+    color: #fff;
 
     .title {
-      font-size: 35px;
-      font-weight: 600;
-      color: #c9daff;
-      margin: 20px 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     .description {
-      font-size: 20px;
-      margin: 5px 20px;
-      line-height: 1.4;
-      color: ${({ theme }) => theme.text_secondary};
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      transition: all 0.3s ease;
+      font-size: 1rem;
+      margin-bottom: 15px;
     }
 
-    &:hover .description {
-      -webkit-line-clamp: unset;
-    }
+    .links a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 15px;
+      display: inline-flex;
+      align-items: center;
 
-    .links {
-      display: flex;
-      padding-top: 60px;
-      justify-content: flex-end; /* push all links to the right */
-      gap: 20px; /* space between GitHub and Live Demo */
-
-      font-size: 16px;
-
-      a {
-        color: #448febff;
-        text-decoration: none;
-        font-weight: bold;
-        display: inline-flex;
-        align-items: center;
-
-        gap: 6px;
-
-        &:hover {
-          color: #688bb7;
-        }
-      }
-
-      span {
-        color: #888;
-        font-style: italic;
-      }
-      .live-demo {
-        text-align: right;
-        font-size: 16px;
-
-        a {
-          color: #448febff;
-          text-decoration: none;
-          font-weight: bold;
-          display: inline-flex; /* <-- add this */
-          align-items: center; /* <-- vertically center icon */
-          gap: 6px;
-
-          &:hover {
-            color: #688bb7;
-          }
-        }
-      }
-    }
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-    height: auto; /* card grows based on content */
-    &:first-child {
-      margin-top: -50px;
-    }
-
-    &:hover {
-      height: auto;
-    }
-
-    .image-section {
-      height: 150px; /* fixed height for image */
-      background-size: contain;
-      background-position: center;
-      border-radius: 20px 20px 0 0;
-    }
-
-    .text-section {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between; /* <-- push live-demo to bottom */
-      flex: 1;
-      padding: 15px;
-
-      .title {
-        font-size: 15px;
-        margin: 2px 2px;
-      }
-
-      .description {
-        font-size: 12px;
-        margin: 2px 2px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* show only 2 lines by default */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
-
-      .live-demo {
-        padding-top: 20px;
-        font-size: 10px;
+      &:hover {
+        text-decoration: underline;
       }
     }
   }

@@ -11,6 +11,12 @@ const Container = styled.div`
   position: relative;
   z-index: 1;
   align-items: center;
+  margin-left: 100px; /* desktop shift */
+
+  @media (max-width: 768px) {
+    margin-left: 0; /* reset on mobile */
+    margin-right: 0; /* reset on mobile */
+  }
 `;
 
 const Wrapper = styled.div`
@@ -30,48 +36,48 @@ const CertificatesContainer = styled.div`
   margin-right: 55px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 50px;
+  gap: 80px; /* desktop gap */
   align-items: center;
   justify-items: center;
 
-  transform: translateX(-40px); /* shift left like Skills */
+  transform: translateX(-40px); /* desktop shift */
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-left: 70px;
-    margin-top: -50px;
-    transform: translateX(0);
+    grid-template-columns: 1fr; /* single column on mobile */
+    gap: 30px; /* mobile gap */
+    margin-left: 70px; /* mobile margin */
+    margin-top: -50px; /* mobile top spacing */
+    transform: translateX(0); /* reset shift */
   }
 `;
 
 const Card = styled.div`
-  width: 600px;
-  min-height: 300px;
+  width: 100%;
+  max-width: 450px;
+  min-height: 350px;
   background-color: rgba(17, 25, 40, 0.83);
   border: 1px solid rgba(255, 255, 255, 0.125);
   box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
   border-radius: 16px;
   padding: 20px;
   position: relative;
-
   cursor: pointer;
   overflow: hidden;
-
-  transition: transform 0.3s ease;
+  transition: all 0.35s ease;
 
   &:hover {
     transform: scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   }
 
   @media (max-width: 768px) {
-    width: 90%;
-    min-height: 250px;
+    max-width: 90%; /* mobile width */
+    min-height: 300px;
   }
 
   @media (max-width: 500px) {
-    width: 95%;
-    min-height: 220px;
+    max-width: 95%; /* smaller mobile width */
+    min-height: 250px;
   }
 `;
 
@@ -99,36 +105,24 @@ const HoverOverlay = styled.div`
 const Image = styled.img`
   width: 100%;
   height: auto;
+  display: block;
   border-radius: 12px;
   margin-bottom: 12px;
-
-  @media (max-width: 900px) {
-    width: 100%;
-    height: auto;
-  }
 `;
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   text-align: left;
   color: #6e63f2;
   margin-bottom: 8px;
-
-  @media (max-width: 900px) {
-    font-size: 20px;
-  }
 `;
 
 const Desc = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   text-align: left;
   color: ${({ theme }) => theme.text_secondary};
-
-  @media (max-width: 900px) {
-    font-size: 15px;
-  }
 `;
 
 const ModalOverlay = styled.div`
@@ -148,19 +142,28 @@ const ModalContent = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 90%;
   max-height: 90%;
-  position: relative;
+  margin-top: 50px; /* desktop top spacing */
+
+  @media (max-width: 768px) {
+    margin-top: 30px; /* mobile top spacing */
+  }
 `;
 
 const ModalImage = styled.img`
-  width: 800px; /* fixed width */
-  height: 600px;
+  width: 600px; /* fixed desktop size */
+  height: 450px;
   border-radius: 10px;
+  object-fit: contain;
 
-  @media (max-width: 900px) {
-    width: 95%;
-    height: auto; /* fallback for smaller screens */
+  @media (max-width: 768px) {
+    width: 90%; /* mobile width */
+    height: auto;
   }
 `;
 

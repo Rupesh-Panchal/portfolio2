@@ -42,7 +42,7 @@ const SectionHeading = styled.h2`
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: 70px;
+  font-size: 50px;
   margin-top: 25px;
   background: linear-gradient(90deg, #d92585, #fdc830);
   -webkit-background-clip: text;
@@ -176,11 +176,6 @@ const Portfolio = () => {
         <HeroBg />
 
         <PortfolioInner>
-          <SubHeading>
-            Explore my journey through projects, certifications, and technical
-            expertise. Each section represents a milestone in my continuous
-            learning path.
-          </SubHeading>
           {/* Tabs */}
           <TabContainer>
             {tabs.map((tab) => (
