@@ -90,7 +90,7 @@ const TabContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 72vw;
-  height: 6vw;
+  height: 7vw;
   margin-bottom: 40px;
   background: ${({ theme }) => `${theme.bgLight}55`};
   border-radius: 12px;
@@ -108,7 +108,7 @@ const TabButton = styled.button`
   overflow: hidden;
   flex: 1;
   padding: 16px 16px;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 600;
   cursor: pointer;
   border: none;

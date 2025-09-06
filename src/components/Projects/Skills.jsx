@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 const SkillsContainer = styled.div`
   width: 100%;
   max-width: 1200px;
-  margin-right: 55px;
+  margin-left: 55px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 50px;
@@ -46,8 +46,8 @@ const SkillsContainer = styled.div`
 `;
 
 const Skill = styled.div`
-  width: 600px; /* bigger width */
-  min-height: 300px; /* increase height */
+  width: 400px; /* bigger width */
+  min-height: 250px; /* increase height */
   background-color: rgba(17, 25, 40, 0.83);
   border: 1px solid rgba(255, 255, 255, 0.125);
   box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
@@ -84,7 +84,7 @@ const SkillList = styled.div`
 `;
 
 const SkillItem = styled.div`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
   color: ${({ theme }) => theme.text_primary + 80};
   border: 1px solid ${({ theme }) => theme.text_primary + 80};

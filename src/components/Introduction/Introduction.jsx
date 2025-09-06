@@ -176,8 +176,8 @@ const IconRow = styled.div`
   margin-top: 25px;
 
   @media (max-width: 768px) {
-    justify-content: center;
-    gap: 40px; /* smaller gap on mobile */
+    justify-content: flex-start;
+    gap: 15px; /* smaller gap on mobile */
   }
 `;
 
@@ -208,10 +208,6 @@ const IconButton = styled.a`
     transform: scale(1.2);
     box-shadow: 0 0 20px ${({ theme }) => theme.primary + "90"},
       0 0 40px ${({ theme }) => theme.primary + "70"};
-  }
-
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -285,7 +281,7 @@ const IntroSection = () => {
 
         {/* First row: Projects & Hire Me */}
         <ButtonRow>
-          <Button href="#projects">
+          <Button href="#portfolio">
             <span>Projects</span>
           </Button>
           <Button href="#contact">

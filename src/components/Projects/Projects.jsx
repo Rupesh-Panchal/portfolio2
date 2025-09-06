@@ -63,13 +63,13 @@ const ProjectCard = styled(motion.div)`
   }
 
   &:hover {
-    height: 650px;
+    height: 550px;
     box-shadow: 0 35px 65px rgba(0, 0, 0, 0.55);
     border-color: transparent;
   }
 
   .image-section {
-    height: 50%;
+    height: 250px;
     background-size: contain;
     background-position: center;
     border-radius: 20px 20px 0 0;

@@ -12,11 +12,6 @@ const Container = styled.div`
   z-index: 1;
   align-items: center;
   margin-left: 100px; /* desktop shift */
-
-  @media (max-width: 768px) {
-    margin-left: 0; /* reset on mobile */
-    margin-right: 0; /* reset on mobile */
-  }
 `;
 
 const Wrapper = styled.div`
