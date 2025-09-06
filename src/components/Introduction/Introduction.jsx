@@ -4,7 +4,7 @@ import { Bio } from "../../data/constants";
 import { FiGithub } from "react-icons/fi";
 import { CiLinkedin } from "react-icons/ci";
 import TypeWriter from "typewriter-effect";
-import myGif from "../../images/myGif.gif";
+import myGif from "../../images/mygif.gif";
 import StarCanvas from "../canvas/Stars";
 
 // Floating animation for the right side circle
