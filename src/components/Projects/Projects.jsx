@@ -21,38 +21,41 @@ const ProjectsGrid = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 30px;
-    justify-items: center; /* center cards */
   }
 `;
 
 const ProjectCard = styled(motion.div)`
-  position: relative;
   background: #141c2f;
   border-radius: 20px;
   width: 33vw;
   height: 450px;
-  overflow: hidden;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  overflow: hidden;
   justify-content: space-between;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.35s ease;
-  border: 3px solid transparent; /* border thickness */
+  position: relative;
+  border: 3px solid #555;
 
-  /* gradient border using pseudo-element */
   &::before {
     content: "";
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border-radius: 23px; /* slightly more than card radius */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 3px;
     background: linear-gradient(45deg, #ff7e5f, #feb47b, #6a11cb, #2575fc);
-    z-index: 2;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.35s ease;
+    pointer-events: none;
   }
 
   &:hover::before {
@@ -60,48 +63,108 @@ const ProjectCard = styled(motion.div)`
   }
 
   &:hover {
+    height: 650px;
     box-shadow: 0 35px 65px rgba(0, 0, 0, 0.55);
-    height: 550px;
+    border-color: transparent;
   }
 
   .image-section {
     height: 50%;
-    background-size: cover; /* fill fully */
+    background-size: contain;
     background-position: center;
     border-radius: 20px 20px 0 0;
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 1;
-  }
-
-  &:hover .image-section {
-    transform: scale(1.05);
   }
 
   .text-section {
-    padding: 15px;
-    color: #fff;
+    height: 50%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 
     .title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-size: 25px;
+      font-weight: 600;
+      color: #c9daff;
+      margin: 8px 15px;
     }
 
     .description {
-      font-size: 1rem;
-      margin-bottom: 15px;
+      font-size: 12px;
+      margin: 8px 15px;
+      line-height: 1.4;
+      color: ${({ theme }) => theme.text_secondary};
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      transition: all 0.3s ease;
     }
 
-    .links a {
-      color: #fff;
-      text-decoration: none;
-      margin-right: 15px;
-      display: inline-flex;
-      align-items: center;
+    &:hover .description {
+      -webkit-line-clamp: unset;
+    }
 
-      &:hover {
-        text-decoration: underline;
+    .links {
+      display: flex;
+      padding-top: 60px;
+      justify-content: flex-end;
+      gap: 20px;
+
+      a {
+        color: #448febff;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        &:hover {
+          color: #688bb7;
+        }
+      }
+
+      span {
+        color: #888;
+        font-style: italic;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+
+    &:hover {
+      height: auto;
+    }
+
+    .image-section {
+      height: 150px;
+      background-size: contain;
+      background-position: center;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .text-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      padding: 15px;
+
+      .title {
+        font-size: 15px;
+        margin: 2px 2px;
+      }
+
+      .description {
+        font-size: 12px;
+        margin: 2px 2px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: all 0.3s ease;
       }
     }
   }
@@ -121,11 +184,7 @@ const Projects = () => {
         viewport={{ once: false, amount: 0.3 }}
         variants={{
           hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.2,
-            },
-          },
+          visible: { transition: { staggerChildren: 0.2 } },
         }}
       >
         <ProjectsGrid>
@@ -134,7 +193,7 @@ const Projects = () => {
               key={index}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }} // 20% visibility
+              viewport={{ once: false, amount: 0.2 }}
               variants={cardVariants}
             >
               <div
@@ -156,7 +215,6 @@ const Projects = () => {
                   ) : (
                     <span>GitHub Not Available</span>
                   )}
-
                   {proj.link ? (
                     <a
                       href={proj.link}
@@ -166,9 +224,7 @@ const Projects = () => {
                       Live Demo <FiExternalLink style={{ marginLeft: "6px" }} />
                     </a>
                   ) : (
-                    <span style={{ color: "#888", fontStyle: "italic" }}>
-                      No Demo
-                    </span>
+                    <span>No Demo</span>
                   )}
                 </div>
               </div>
