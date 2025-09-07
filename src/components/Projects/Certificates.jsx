@@ -40,7 +40,8 @@ const CertificatesContainer = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr; /* single column on mobile */
     gap: 30px; /* mobile gap */
-    margin-left: 70px; /* mobile margin */
+    max-width: 600px;
+    margin-right: 80px; /* mobile margin */
     margin-top: -50px; /* mobile top spacing */
     transform: translateX(0); /* reset shift */
   }
@@ -111,6 +112,10 @@ const Title = styled.div`
   text-align: left;
   color: #6e63f2;
   margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const Desc = styled.div`
@@ -118,6 +123,10 @@ const Desc = styled.div`
   font-weight: 500;
   text-align: left;
   color: ${({ theme }) => theme.text_secondary};
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const ModalOverlay = styled.div`

@@ -308,7 +308,14 @@ const Hero = () => {
               <motion.div {...headContentAnimation}>
                 <SubTitle variants={itemVariants}>{Bio.description}</SubTitle>
               </motion.div>
-              <ResumeButton variants={itemVariants}>Check Resume</ResumeButton>
+              <ResumeButton
+                variants={itemVariants}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Check Resume
+              </ResumeButton>
             </HeroLeftContainer>
 
             {/* RIGHT SIDE - slides from bottom */}

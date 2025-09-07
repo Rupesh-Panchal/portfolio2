@@ -21,6 +21,7 @@ const PortfolioContainer = styled.div`
   margin: 0 auto;
   z-index: 1;
   overflow: visible;
+  margin-top: 25px;
 
   @media (max-width: 768px) {
     padding: 40px 20px;
@@ -43,7 +44,7 @@ const SectionHeading = styled.h2`
   align-items: center;
   font-weight: 700;
   font-size: 50px;
-  margin-top: 25px;
+  margin-top: 65px;
   background: linear-gradient(90deg, #d92585, #fdc830);
   -webkit-background-clip: text;
   color: transparent;

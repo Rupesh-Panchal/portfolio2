@@ -38,8 +38,8 @@ const SkillsContainer = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 30px;
-    margin-left: 70px;
+    gap: 50px;
+    margin-right: 35px;
     margin-top: -50px;
     transform: translateX(0); /* reset on mobile */
   }
