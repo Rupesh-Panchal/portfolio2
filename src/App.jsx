@@ -6,6 +6,7 @@ import Hero from "./components/sections/Hero";
 import Portfolio from "./components/Portfolio/Portfolio";
 import Introduction from "./components/Introduction/Introduction";
 import Contact from "./components/Contact/Contact";
+import Footer from "./components/Footer/Footer";
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -26,6 +27,7 @@ const App = () => {
           <Hero />
           <Portfolio />
           <Contact />
+          <Footer />
         </Body>
       </BrowserRouter>
     </ThemeProvider>
