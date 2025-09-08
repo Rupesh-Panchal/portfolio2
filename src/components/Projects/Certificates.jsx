@@ -67,7 +67,7 @@ const Card = styled.div`
   }
 
   @media (max-width: 768px) {
-    max-width: 90%; /* mobile width */
+    max-width: 95%; /* mobile width */
     min-height: 300px;
   }
 

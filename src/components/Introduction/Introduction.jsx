@@ -175,6 +175,10 @@ const IconRow = styled.div`
   gap: 20px; /* now works properly */
   margin-top: 25px;
 
+  opacity: 0;
+  animation: ${slideInUp} 0.9s ease-out forwards;
+  animation-delay: 0.7s;
+
   @media (max-width: 768px) {
     justify-content: flex-start;
     gap: 15px; /* smaller gap on mobile */
