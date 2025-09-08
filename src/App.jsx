@@ -27,7 +27,6 @@ const App = () => {
           <Hero />
           <Portfolio />
           <Contact />
-          <Footer />
         </Body>
       </BrowserRouter>
     </ThemeProvider>

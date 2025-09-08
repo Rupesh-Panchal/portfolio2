@@ -6,18 +6,18 @@ import { motion } from "framer-motion";
 const FooterContainer = styled.footer`
   background-color: #111928;
   color: #eee;
-  padding: 40px 20px;
+  padding: 20px 20px; /* reduced padding */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px; /* reduced gap */
 `;
 
 const FooterContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -28,7 +28,7 @@ const FooterContent = styled.div`
 `;
 
 const FooterBrand = styled.div`
-  font-size: 24px;
+  font-size: 20px; /* slightly smaller */
   font-weight: 700;
   background: linear-gradient(90deg, #d92585, #fdc830);
   -webkit-background-clip: text;
@@ -37,7 +37,7 @@ const FooterBrand = styled.div`
 
 const FooterLinks = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
 
   a {
     color: #eee;
@@ -45,7 +45,7 @@ const FooterLinks = styled.div`
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: color 0.3s ease;
 
     &:hover {
@@ -55,48 +55,47 @@ const FooterLinks = styled.div`
 `;
 
 const FooterText = styled.div`
-  font-size: 14px;
+  font-size: 13px; /* smaller text */
   color: #aaa;
   text-align: center;
 `;
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterBrand>YourName</FooterBrand>
+      <motion.div
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+      >
+        <FooterBrand>YourName</FooterBrand>
+      </motion.div>
 
       <FooterContent>
-        <FooterLinks>
-          <a
-            href="https://linkedin.com/in/yourlinkedin"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaLinkedin /> LinkedIn
-          </a>
-          <a
-            href="https://github.com/yourgithub"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithub /> GitHub
-          </a>
-          <a
-            href="https://twitter.com/yourtwitter"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaTwitter /> Twitter
-          </a>
-        </FooterLinks>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        ></motion.div>
+      </FooterContent>
+
+      <motion.div
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+      >
         <FooterText>
           © {new Date().getFullYear()} YourName. All rights reserved.
         </FooterText>
-      </FooterContent>
-
-      <FooterText>
-        © {new Date().getFullYear()} YourName. All rights reserved.
-      </FooterText>
+      </motion.div>
     </FooterContainer>
   );
 };

@@ -297,7 +297,7 @@ export const projects = [
     id: 1,
     title: "InsiderJobs",
     description:
-      "InsiderJobs is a web application designed to streamline job searching and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
+      "InsiderJobs is a full-featured platform that connects job seekers with potential employers. Users can create profiles, browse and apply for jobs, and receive notifications about relevant openings, while employers can post job listings and manage applications efficiently. The project focuses on providing a seamless, user-friendly experience for career growth.",
     image: jobportal,
     github: "https://github.com/Rupesh-Panchal/jobportal",
     link: "https://jobportal-alpha-eosin.vercel.app/",
@@ -306,7 +306,7 @@ export const projects = [
     id: 2,
     title: "PasteApp",
     description:
-      "PasteApp is a web application designed to streamline task management and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
+      "PasteApp is a lightweight online tool for sharing text snippets quickly and securely. Users can create, store, and share code or text snippets with unique links, making it ideal for collaboration or temporary data sharing. The app emphasizes simplicity, speed, and privacy.",
     image: pasteapp,
 
     github: "https://github.com/Rupesh-Panchal/PasteApp",
@@ -316,7 +316,7 @@ export const projects = [
     id: 3,
     title: "Jarvis",
     description:
-      "Jarvis is a web application designed to streamline job searching and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
+      "Jarvis is an Python-based desktop assistant that automates tasks and enhances productivity. It can open websites and applications via voice commands, respond to user questions, send messages, and perform searches, providing an interactive and intelligent way to manage daily activities.",
     image: jarvis,
 
     github: "https://github.com/Rupesh-Panchal/assistant",
@@ -325,7 +325,7 @@ export const projects = [
     id: 4,
     title: "CodeReviewer",
     description:
-      "InsiderJobs is a web application designed to streamline job searching and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. \nAdmin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
+      "CodeReviewer is a platform that helps developers improve their code quality by providing automated feedback and suggestions. It analyzes submitted code for errors, optimization opportunities, and adherence to best practices, assisting both beginners and experienced programmers in writing cleaner, more efficient code.",
     image: codereview,
 
     github: "https://github.com/Rupesh-Panchal/code-reviewer",
