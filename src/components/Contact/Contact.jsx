@@ -10,6 +10,7 @@ import { FiGithub } from "react-icons/fi";
 import { TbBrandLinkedin } from "react-icons/tb";
 import { PiShareNetworkBold } from "react-icons/pi";
 import { SiGitconnected } from "react-icons/si";
+import { motion } from "framer-motion";
 
 // Styled components (same as your original)
 const Container = styled.div`
@@ -328,9 +329,46 @@ const ConnectIcon = styled(SiGitconnected)`
   gap: 20px; /* adjust height */
 `;
 
+// Form slides from left
+const formVariants = {
+  hidden: { opacity: 0, x: -100 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 1, ease: "easeOut" },
+  },
+};
+
+// Inner content slides from bottom with stagger
+const contentVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      staggerChildren: 0.15,
+      delayChildren: 1.5, // delay inner content
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const MotionContactInfoWrapper = motion(ContactInfoWrapper);
+const MotionInputWrapper = motion(InputWrapper);
+const MotionTextareaWrapper = motion(InputWrapper); // same as InputWrapper
+const MotionContactButton = motion(ContactButton);
+
 // Contact component
 const Contact = () => {
   const [result, setResult] = useState({ message: "", success: false });
+
+  const MotionContactForm = motion(ContactForm);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -379,118 +417,166 @@ const Contact = () => {
       </Desc>
       <StarCanvas />
       <Wrapper>
-        <ContactForm onSubmit={onSubmit}>
-          {/* Hidden inputs required by Web3Forms */}
-          <input
-            type="hidden"
-            name="access_key"
-            value="7ab813cd-dc68-475f-bf39-f0094778f9d5" // Replace with your actual access key
-          />
-          <input
-            type="hidden"
-            name="subject"
-            value="New Contact Form Submission"
-          />
-
-          <ContactTitle>
-            Get in Touch <PiShareNetworkBold />
-          </ContactTitle>
-          <ContactSubtitle>I'd love to hear from you!</ContactSubtitle>
-
-          <ContactInfoWrapper>
-            <InfoBox>
-              <IconWrapper>
-                <FiPhone />
-              </IconWrapper>
-              <ContentBox>
-                <Label>Phone</Label>
-                <Value>+91 7045773441</Value>
-              </ContentBox>
-            </InfoBox>
-
-            <InfoBox>
-              <IconWrapper>
-                <FiMail />
-              </IconWrapper>
-              <ContentBox>
-                <Label>Email</Label>
-                <Value>rupeshpanchal509@gmail.com</Value>
-              </ContentBox>
-            </InfoBox>
-          </ContactInfoWrapper>
-
-          <InputWrapper>
-            <StyledInput
-              type="text"
-              placeholder="Your Name"
-              name="from_name"
-              required
-              autoComplete="name"
+        <motion.div
+          variants={formVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+        >
+          <ContactForm onSubmit={onSubmit}>
+            {/* Hidden inputs required by Web3Forms */}
+            <input
+              type="hidden"
+              name="access_key"
+              value="7ab813cd-dc68-475f-bf39-f0094778f9d5" // Replace with your actual access key
             />
-          </InputWrapper>
-
-          <InputWrapper>
-            <StyledInput
-              type="email"
-              placeholder="Your Email"
-              name="from_email"
-              required
-              autoComplete="email"
+            <input
+              type="hidden"
+              name="subject"
+              value="New Contact Form Submission"
             />
-          </InputWrapper>
 
-          <InputWrapper>
-            <StyledTextarea
-              placeholder="Message"
-              name="message"
-              rows={6}
-              required
-            />
-          </InputWrapper>
-
-          <ContactButton type="submit">
-            <FiSend /> Send Message
-          </ContactButton>
-
-          {result.message && (
-            <ResultMessage success={result.success}>
-              {result.message}
-            </ResultMessage>
-          )}
-
-          <SectionDivider />
-
-          <ConnectSection>
-            <ConnectTitle>
-              <ConnectIcon />
-              Connect With Me
-            </ConnectTitle>
-
-            <ConnectCard
-              href={Bio.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.div
+              variants={contentVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
             >
-              <LinkedInIcon size={28} />
-              <CardLabel>
-                Let's Connect
-                <span>on LinkedIn</span>
-              </CardLabel>
-            </ConnectCard>
+              <ContactTitle>
+                Get in Touch <PiShareNetworkBold />
+              </ContactTitle>
+              <ContactSubtitle>I'd love to hear from you!</ContactSubtitle>
+            </motion.div>
 
-            <ConnectCard
-              href={Bio.github}
-              target="_blank"
-              rel="noopener noreferrer"
+            <MotionContactInfoWrapper
+              variants={contentVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
             >
-              <GitHubIcon size={28} />
-              <CardLabel>
-                GitHub
-                <span>on GitHub</span>
-              </CardLabel>
-            </ConnectCard>
-          </ConnectSection>
-        </ContactForm>
+              <InfoBox variants={itemVariants}>
+                <IconWrapper>
+                  <FiPhone />
+                </IconWrapper>
+                <ContentBox>
+                  <Label>Phone</Label>
+                  <Value>+91 7045773441</Value>
+                </ContentBox>
+              </InfoBox>
+
+              <InfoBox variants={itemVariants}>
+                <IconWrapper>
+                  <FiMail />
+                </IconWrapper>
+                <ContentBox>
+                  <Label>Email</Label>
+                  <Value>rupeshpanchal509@gmail.com</Value>
+                </ContentBox>
+              </InfoBox>
+            </MotionContactInfoWrapper>
+
+            <MotionInputWrapper
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              <StyledInput
+                type="text"
+                placeholder="Your Name"
+                name="from_name"
+                required
+                autoComplete="name"
+              />
+            </MotionInputWrapper>
+
+            <MotionInputWrapper
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              <StyledInput
+                type="email"
+                placeholder="Your Email"
+                name="from_email"
+                required
+                autoComplete="email"
+              />
+            </MotionInputWrapper>
+
+            <MotionTextareaWrapper
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              <StyledTextarea
+                placeholder="Message"
+                name="message"
+                rows={6}
+                required
+              />
+            </MotionTextareaWrapper>
+
+            <MotionContactButton
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              <FiSend /> Send Message
+            </MotionContactButton>
+
+            {result.message && (
+              <ResultMessage success={result.success}>
+                {result.message}
+              </ResultMessage>
+            )}
+
+            <SectionDivider />
+
+            <motion.div
+              variants={itemVariants} // parent handles stagger
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
+              <ConnectSection variants={itemVariants}>
+                <ConnectTitle variants={itemVariants}>
+                  <ConnectIcon />
+                  Connect With Me
+                </ConnectTitle>
+
+                <ConnectCard
+                  href={Bio.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={itemVariants}
+                >
+                  <LinkedInIcon size={28} />
+                  <CardLabel>
+                    Let's Connect
+                    <span>on LinkedIn</span>
+                  </CardLabel>
+                </ConnectCard>
+
+                <ConnectCard
+                  href={Bio.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={itemVariants}
+                >
+                  <GitHubIcon size={28} />
+                  <CardLabel>
+                    GitHub
+                    <span>on GitHub</span>
+                  </CardLabel>
+                </ConnectCard>
+              </ConnectSection>
+            </motion.div>
+          </ContactForm>
+        </motion.div>
 
         {/* Connect With Me Section */}
       </Wrapper>
