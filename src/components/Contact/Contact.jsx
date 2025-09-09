@@ -37,6 +37,8 @@ const Title = styled.div`
   align-items: center;
   font-weight: 700;
   font-size: 50px;
+  padding-top: 20px;
+
   background: linear-gradient(90deg, #d92585, #fdc830);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link as LinkR } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { Bio } from "../data/constants";
-import { MenuRounded } from "@mui/icons-material";
+import { MenuRounded, Close } from "@mui/icons-material";
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -146,14 +146,17 @@ const MobileIcon = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.text_primary};
-  display: none;
+  cursor: pointer;
+
   @media screen and (max-width: 768px) {
-    display: block;
+    display: flex;
     margin-right: 10px;
   }
 `;
 
-const MobileMenu = styled.ul`
+const MobileMenu = styled.ul.withConfig({
+  shouldForwardProp: (prop) => prop !== "isOpen", // prevent passing isOpen to <ul>
+})`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -186,7 +189,11 @@ const Navbar = () => {
         <NavLogo to="/">Rupesh Panchal</NavLogo>
 
         <MobileIcon onClick={() => setIsOpen(!isOpen)}>
-          <MenuRounded style={{ color: "inherit" }} />
+          {isOpen ? (
+            <Close style={{ color: "inherit" }} />
+          ) : (
+            <MenuRounded style={{ color: "inherit" }} />
+          )}
         </MobileIcon>
 
         <NavItems>
