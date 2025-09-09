@@ -69,7 +69,7 @@ const ContactForm = styled.form`
   border-radius: 12px;
   box-shadow: #100d21;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const ContactTitle = styled.div`
@@ -363,30 +363,58 @@ const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    toast.loading("Sending...", { id: "send" });
+    const name = form.current.name.value.trim();
+    const email = form.current.email.value.trim();
+    const message = form.current.message.value.trim();
+
+    if (!name || !email || !message) {
+      toast.error("Please fill out all fields!", {
+        id: "send",
+        style: { marginTop: "100px" },
+      });
+      return;
+    }
+
+    toast.loading("Sending...", { id: "send", style: { marginTop: "100px" } });
 
     emailjs
       .sendForm(
-        "service_v093htb", // replace with EmailJS Service ID
-        "template_sdxpusf", // replace with EmailJS Template ID
+        "service_v093htb", // your EmailJS Service ID
+        "template_sdxpusf", // your EmailJS Template ID
         form.current,
-        "PlnRZ2Z2D-Au2ONv4" // replace with EmailJS Public Key
+        "PlnRZ2Z2D-Au2ONv4" // your EmailJS Public Key
       )
       .then(
         () => {
-          toast.success("Message Sent Successfully ✅", { id: "send" });
+          toast.success("You will get response soon ✅", {
+            id: "send",
+            style: { marginTop: "100px" },
+          });
           form.current.reset();
         },
         (error) => {
           console.error(error.text);
-          toast.error("Something went wrong ❌", { id: "send" });
+          toast.error("Something went wrong ❌", {
+            id: "send",
+            style: { marginTop: "100px" },
+          });
         }
       );
   };
 
   return (
     <Container id="contact">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            marginTop: "100px", // adjust as needed
+            zIndex: 9999,
+          },
+        }}
+      />
+
       <Earth />
       <Title>Contact Me</Title>
       <Desc>
@@ -450,7 +478,6 @@ const Contact = () => {
                 type="text"
                 placeholder="Your Name"
                 name="name"
-                required
                 autoComplete="name"
               />
             </MotionInputWrapper>
@@ -465,7 +492,6 @@ const Contact = () => {
                 type="email"
                 placeholder="Your Email"
                 name="email"
-                required
                 autoComplete="email"
               />
             </MotionInputWrapper>
@@ -476,12 +502,7 @@ const Contact = () => {
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
             >
-              <StyledTextarea
-                placeholder="Message"
-                name="message"
-                rows={6}
-                required
-              />
+              <StyledTextarea placeholder="Message" name="message" rows={6} />
             </MotionTextareaWrapper>
 
             <MotionContactButton
