@@ -367,8 +367,24 @@ const Contact = () => {
     const email = form.current.email.value.trim();
     const message = form.current.message.value.trim();
 
-    if (!name || !email || !message) {
-      toast.error("Please fill out all fields!", {
+    if (!name) {
+      toast.error("Please enter your Name!", {
+        id: "send",
+        style: { marginTop: "100px" },
+      });
+      return;
+    }
+
+    if (!email) {
+      toast.error("Please enter your Email!", {
+        id: "send",
+        style: { marginTop: "100px" },
+      });
+      return;
+    }
+
+    if (!message) {
+      toast.error("Please enter your Message!", {
         id: "send",
         style: { marginTop: "100px" },
       });
@@ -394,7 +410,7 @@ const Contact = () => {
         },
         (error) => {
           console.error(error.text);
-          toast.error("Something went wrong ❌", {
+          toast.error("Something went wrong ", {
             id: "send",
             style: { marginTop: "100px" },
           });

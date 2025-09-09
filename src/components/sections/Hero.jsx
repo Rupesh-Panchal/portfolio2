@@ -309,7 +309,7 @@ const Hero = () => {
                 <SubTitle variants={itemVariants}>{Bio.description}</SubTitle>
               </motion.div>
               <ResumeButton
-                href="/rupesh-resume.pdf"
+                href="/rupesh-resume (1).pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
