@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { PiShareNetworkThin } from "react-icons/pi";
+import { PiShareNetworkBold } from "react-icons/pi";
 import { FiPhone, FiMail, FiSend } from "react-icons/fi";
 import StarCanvas from "../canvas/Stars";
 import { Bio } from "../../data/constants";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
-import { CiLinkedin } from "react-icons/ci";
-import { FiGithub } from "react-icons/fi";
-import { TbBrandLinkedin } from "react-icons/tb";
-import { PiShareNetworkBold } from "react-icons/pi";
 import { SiGitconnected } from "react-icons/si";
 import { motion } from "framer-motion";
+import { Toaster, toast } from "react-hot-toast";
+import emailjs from "@emailjs/browser";
+import Earth from "../canvas/Earth";
 
 // Styled components (same as your original)
 const Container = styled.div`
@@ -41,7 +40,6 @@ const Title = styled.div`
   background: linear-gradient(90deg, #d92585, #fdc830);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
@@ -207,13 +205,6 @@ const ContactButton = styled.button`
   }
 `;
 
-const ResultMessage = styled.p`
-  color: ${({ success }) => (success ? "#4BB543" : "#FF4136")};
-  margin-top: 10px;
-  font-weight: 600;
-  text-align: center;
-`;
-
 const ConnectSection = styled.div`
   margin-top: 20px;
   width: 100%;
@@ -231,8 +222,8 @@ const ConnectTitle = styled.h4`
   font-weight: 600;
   margin-bottom: 10px;
   color: #fdfdfd;
-  display: flex; /* make it flex */
-  align-items: center; /* vertically center icon with text */
+  display: flex;
+  align-items: center;
   gap: 8px;
 `;
 
@@ -245,16 +236,21 @@ const ConnectCard = styled.a`
   padding: 14px 18px;
   border-radius: 12px;
   background-color: #373e4e;
-  background: transparent;
   border: 1px solid rgba(170, 170, 170, 0.5);
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
   color: #eee;
   margin-bottom: 10px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /* smooth hover */
 
-  /* Shimmer overlay */
+  &:hover {
+    transform: translateY(-4px) scale(1.03); /* lift + slight zoom */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* subtle shadow */
+    border-color: #7d51cfff; /* optional border color change */
+  }
+
+  /* Optional shimmer effect on hover */
   &::before {
     content: "";
     position: absolute;
@@ -270,14 +266,11 @@ const ConnectCard = styled.a`
       transparent 80%
     );
     transform: skewX(-20deg);
+    pointer-events: none; /* allow clicking the card */
   }
 
   &:hover::before {
     animation: shimmer 1.2s forwards;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
   }
 
   @keyframes shimmer {
@@ -291,14 +284,14 @@ const ConnectCard = styled.a`
 `;
 
 const LinkedInIcon = styled(FaLinkedin)`
-  color: #0077b5; /* LinkedIn brand blue */
+  color: #0077b5;
   border-radius: 10px;
   width: 38px;
   height: 38px;
 `;
 
 const GitHubIcon = styled(FaGithub)`
-  color: #eee; /* GitHub black */
+  color: #eee;
   border-radius: 10px;
   width: 38px;
   height: 38px;
@@ -319,17 +312,15 @@ const SectionDivider = styled.div`
   height: 1px;
   border-radius: 4px;
   background: #2e3d50;
-  margin-top: 20px; /* center + spacing below */
+  margin-top: 20px;
 `;
 
 const ConnectIcon = styled(SiGitconnected)`
-  color: #7d51cfff; /* your desired color */
-  width: 28px; /* adjust width */
+  color: #7d51cfff;
+  width: 28px;
   height: 28px;
-  gap: 20px; /* adjust height */
 `;
 
-// Form slides from left
 const formVariants = {
   hidden: { opacity: 0, x: -100 },
   visible: {
@@ -339,7 +330,6 @@ const formVariants = {
   },
 };
 
-// Inner content slides from bottom with stagger
 const contentVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
@@ -349,7 +339,7 @@ const contentVariants = {
       duration: 0.6,
       ease: "easeOut",
       staggerChildren: 0.15,
-      delayChildren: 1.5, // delay inner content
+      delayChildren: 1.5,
     },
   },
 };
@@ -361,56 +351,42 @@ const itemVariants = {
 
 const MotionContactInfoWrapper = motion(ContactInfoWrapper);
 const MotionInputWrapper = motion(InputWrapper);
-const MotionTextareaWrapper = motion(InputWrapper); // same as InputWrapper
+const MotionTextareaWrapper = motion(InputWrapper);
 const MotionContactButton = motion(ContactButton);
+const MotionConnectSection = motion(ConnectSection);
 
-// Contact component
+// Contact Component
 const Contact = () => {
-  const [result, setResult] = useState({ message: "", success: false });
+  const form = useRef();
 
-  const MotionContactForm = motion(ContactForm);
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setResult({ message: "Sending...", success: false });
+    toast.loading("Sending...", { id: "send" });
 
-    const form = event.target;
-    const data = {
-      access_key: "7ab813cd-dc68-475f-bf39-f0094778f9d5",
-      subject: "New Contact Form Submission",
-      Name: form.from_name.value,
-      Email: form.from_email.value,
-      Message: form.message.value,
-      redirect: "https://web3forms.com/success",
-    };
-
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    emailjs
+      .sendForm(
+        "service_v093htb", // replace with EmailJS Service ID
+        "template_sdxpusf", // replace with EmailJS Template ID
+        form.current,
+        "PlnRZ2Z2D-Au2ONv4" // replace with EmailJS Public Key
+      )
+      .then(
+        () => {
+          toast.success("Message Sent Successfully ✅", { id: "send" });
+          form.current.reset();
         },
-        body: JSON.stringify(data),
-      });
-
-      const result = await res.json();
-
-      if (result.success) {
-        setResult({ message: "Message Sent Successfully ✅", success: true });
-        form.reset();
-      } else {
-        setResult({
-          message: result.message || "Something went wrong ❌",
-          success: false,
-        });
-      }
-    } catch (error) {
-      setResult({ message: "Network Error ❌", success: false });
-    }
+        (error) => {
+          console.error(error.text);
+          toast.error("Something went wrong ❌", { id: "send" });
+        }
+      );
   };
 
   return (
     <Container id="contact">
+      <Toaster position="top-right" reverseOrder={false} />
+      <Earth />
       <Title>Contact Me</Title>
       <Desc>
         Got a question? Send me a message, and I'll get back to you soon.
@@ -423,19 +399,7 @@ const Contact = () => {
           whileInView="visible"
           viewport={{ once: false }}
         >
-          <ContactForm onSubmit={onSubmit}>
-            {/* Hidden inputs required by Web3Forms */}
-            <input
-              type="hidden"
-              name="access_key"
-              value="7ab813cd-dc68-475f-bf39-f0094778f9d5" // Replace with your actual access key
-            />
-            <input
-              type="hidden"
-              name="subject"
-              value="New Contact Form Submission"
-            />
-
+          <ContactForm ref={form} onSubmit={sendEmail}>
             <motion.div
               variants={contentVariants}
               initial="hidden"
@@ -476,7 +440,7 @@ const Contact = () => {
             </MotionContactInfoWrapper>
 
             <MotionInputWrapper
-              variants={itemVariants}
+              variants={itemVariants} // <-- Apply here
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
@@ -484,14 +448,14 @@ const Contact = () => {
               <StyledInput
                 type="text"
                 placeholder="Your Name"
-                name="from_name"
+                name="name"
                 required
                 autoComplete="name"
               />
             </MotionInputWrapper>
 
             <MotionInputWrapper
-              variants={itemVariants}
+              variants={itemVariants} // <-- Apply here
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
@@ -499,14 +463,14 @@ const Contact = () => {
               <StyledInput
                 type="email"
                 placeholder="Your Email"
-                name="from_email"
+                name="email"
                 required
                 autoComplete="email"
               />
             </MotionInputWrapper>
 
             <MotionTextareaWrapper
-              variants={itemVariants}
+              variants={itemVariants} // <-- Apply here
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
@@ -520,65 +484,54 @@ const Contact = () => {
             </MotionTextareaWrapper>
 
             <MotionContactButton
+              variants={itemVariants} // <-- Apply here
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+              type="submit"
+            >
+              <FiSend /> Send Message
+            </MotionContactButton>
+
+            <SectionDivider />
+
+            <MotionConnectSection
               variants={itemVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
             >
-              <FiSend /> Send Message
-            </MotionContactButton>
+              <ConnectTitle>
+                <ConnectIcon />
+                Connect With Me
+              </ConnectTitle>
 
-            {result.message && (
-              <ResultMessage success={result.success}>
-                {result.message}
-              </ResultMessage>
-            )}
+              <ConnectCard
+                href={Bio.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInIcon size={28} />
+                <CardLabel>
+                  Let's Connect
+                  <span>on LinkedIn</span>
+                </CardLabel>
+              </ConnectCard>
 
-            <SectionDivider />
-
-            <motion.div
-              variants={itemVariants} // parent handles stagger
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-            >
-              <ConnectSection variants={itemVariants}>
-                <ConnectTitle variants={itemVariants}>
-                  <ConnectIcon />
-                  Connect With Me
-                </ConnectTitle>
-
-                <ConnectCard
-                  href={Bio.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variants={itemVariants}
-                >
-                  <LinkedInIcon size={28} />
-                  <CardLabel>
-                    Let's Connect
-                    <span>on LinkedIn</span>
-                  </CardLabel>
-                </ConnectCard>
-
-                <ConnectCard
-                  href={Bio.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variants={itemVariants}
-                >
-                  <GitHubIcon size={28} />
-                  <CardLabel>
-                    GitHub
-                    <span>on GitHub</span>
-                  </CardLabel>
-                </ConnectCard>
-              </ConnectSection>
-            </motion.div>
+              <ConnectCard
+                href={Bio.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GitHubIcon size={28} />
+                <CardLabel>
+                  GitHub
+                  <span>on GitHub</span>
+                </CardLabel>
+              </ConnectCard>
+            </MotionConnectSection>
           </ContactForm>
         </motion.div>
-
-        {/* Connect With Me Section */}
       </Wrapper>
     </Container>
   );
