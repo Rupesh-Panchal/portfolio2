@@ -40,7 +40,7 @@ const CertificatesContainer = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr; /* single column on mobile */
     gap: 30px; /* mobile gap */
-    max-width: 600px;
+    max-width: 700px;
     margin-right: 80px; /* mobile margin */
     margin-top: -50px; /* mobile top spacing */
     transform: translateX(0); /* reset shift */
@@ -69,10 +69,13 @@ const Card = styled.div`
   @media (max-width: 768px) {
     max-width: 95%; /* mobile width */
     min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
   }
 
   @media (max-width: 500px) {
-    max-width: 95%; /* smaller mobile width */
+    max-width: 100%; /* smaller mobile width */
     min-height: 250px;
   }
 `;
@@ -156,17 +159,18 @@ const ModalContent = styled.div`
 
   @media (max-width: 768px) {
     margin-top: 30px; /* mobile top spacing */
+    max-width: 95%;
   }
 `;
 
 const ModalImage = styled.img`
-  width: 600px; /* fixed desktop size */
+  width: 100%; /* fixed desktop size */
   height: 450px;
   border-radius: 10px;
   object-fit: contain;
 
   @media (max-width: 768px) {
-    width: 90%; /* mobile width */
+    max-width: 90%; /* mobile width */
     height: auto;
   }
 `;
