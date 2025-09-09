@@ -69,13 +69,14 @@ const ContactForm = styled.form`
   border-radius: 12px;
   box-shadow: #100d21;
   gap: 16px;
+  margin-bottom: 40px;
 `;
 
 const ContactTitle = styled.div`
   display: flex;
   align-items: center;
   font-size: 28px;
-  margin-bottom: -8px;
+  margin-bottom: 8px;
   font-weight: 700;
   gap: 8px;
   color: #7d51cfff;
