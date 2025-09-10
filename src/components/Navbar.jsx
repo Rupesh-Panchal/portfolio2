@@ -143,13 +143,13 @@ const GithubButton = styled.a`
 
 const MobileIcon = styled.div`
   height: 100%;
-  display: flex;
+  display: none; /* hide on desktop */
   align-items: center;
   color: ${({ theme }) => theme.text_primary};
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    display: flex;
+    display: flex; /* show only on mobile */
     margin-right: 10px;
   }
 `;
